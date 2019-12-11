@@ -1,0 +1,33 @@
+---
+- hosts: ubuntu_server
+  sudo: yes
+  tasks:
+   - name: installing chrony
+     apt: name=chrony state=present
+   - name: start the service
+     service: name=chrony enabled=no
+
+- hosts: centos_server
+  sudo: yes
+  tasks:
+   - name: installing chrony
+     yum: name=chrony state=present
+   - name: start the service
+     service: name=chronyd enabled=no
+
+- hosts: ubuntu_server
+  sudo: yes
+  tasks:
+    - lineinfile: 
+       path: /etc/chrony/chrony.conf
+       line: 'server 192.168.0.19'
+
+- hosts: centos_server
+  sudo: yes
+  tasks:
+    - lineinfile:
+       path: /etc/chrony.conf
+       line: 'server 192.168.0.19'
+
+
+
